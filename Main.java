@@ -9,6 +9,6 @@ public class Main{
 			Game.CreateSquare();
 			Game.PrintBoard();
 		}
-		System.out.println("You fuckin' lose bye bye uwu~");
+		System.out.println("You lose bye bye");
 	}
 }
