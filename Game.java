@@ -1,41 +1,48 @@
 public class Game{
-	public static void Initialise(){
-		int [][] GameBoard = new int[4][4];
-		CreateSquare(); // create 2 initial squares for a new game
-		CreateSquare(); // create 2 initial squares for a new game
-	}
-	public static void CreateSquare(){
-		if ((int)(Math.random() * 10) > 2){
-			// i must warn, this part is going to be very inefficient 'bad code'. it's just forever gonna bruteforce cells until it finds an empty one. MUST RUN AFTER REMAINING MOVES CHECK STATES 'TRUE' !!!
-			GameBoard[((Math.random() * 3.0) + 1)][((Math.random() * 3.0) + 1)] = 4; // this scary math is to make sure every cell has an (almost) equal chance of being occupied by a number
-		}
-		else{
-			GameBoard[((Math.random() * 3.0) + 1)][((Math.random() * 3.0) + 1)] = 2; // this time, 2 (should be triggered more often than 4)
-		}
-	}
-	public static boolean MovesArePossible(){
-		private boolean AreTheyReally = false;
-		for (int IndexRows = 0; IndexRows < grid.length; IndexRows++){
-			for (int IndexColumns = 0; IndexColumns < grid[IndexRows].length; IndexColumns++){
-				if (grid[IndexRows][IndexColumns] = 0){
-					AreTheyReally = true;
-				}
-			}
-		}
-		return AreTheyReally;
-	}
-	public static void UpdateBoard(String Direction){
-		private String DirectionVerify = Direction;
-		while !(Direction == "up" || Direction == "right" || Direction == "down" || Direction == "left"){
-			DirectionVerify = Scanener.nextLine();
-		}
-		Sort.InDirection(DirectionVerify);
-	}
-	public static void PrintBoard(){
-		for (int Row = 0; Row <= 3; Row++){
-			for (int Column = 0; Column <= 3; Column++){
-				System.out.println(GameBoard[Row][Column]);
-			}
-		}
-	}
+    static int[][] GameBoard = new int[4][4];
+    public static void Initialise(){
+        GameBoard = new int[4][4];
+        CreateSquare();
+        CreateSquare();
+    }
+    public static void CreateSquare(){
+        // Find a random empty cell and place a 2 or 4
+        java.util.Random rand = new java.util.Random();
+        int row, col;
+        do {
+            row = rand.nextInt(4);
+            col = rand.nextInt(4);
+        } while (GameBoard[row][col] != 0);
+        GameBoard[row][col] = (rand.nextInt(10) > 2) ? 4 : 2;
+    }
+    public static boolean MovesArePossible(){
+        // Check for any empty cell
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (GameBoard[i][j] == 0){
+                    return true;
+                }
+            }
+        }
+        // Additional logic for checking possible merges can be added here
+        return false;
+    }
+    public static void UpdateBoard(String Direction){
+        // Only accept valid directions
+        while (!(Direction.equals("up") || Direction.equals("right") || Direction.equals("down") || Direction.equals("left"))){
+            System.out.println("Invalid direction. Please enter up, right, down, or left:");
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            Direction = scanner.nextLine();
+        }
+        // Call movement logic
+        Sort.InDirection(Direction);
+    }
+    public static void PrintBoard(){
+        for (int Row = 0; Row < 4; Row++){
+            for (int Column = 0; Column < 4; Column++){
+                System.out.print(GameBoard[Row][Column] + "\t");
+            }
+            System.out.println();
+        }
+    }
 }
